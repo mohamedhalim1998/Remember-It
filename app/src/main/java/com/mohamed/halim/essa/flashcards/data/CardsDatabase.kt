@@ -11,17 +11,17 @@ import com.mohamed.halim.essa.flashcards.util.RoomConverters
 @Database(entities = [CardSet::class], version = 1)
 @TypeConverters(RoomConverters::class)
 abstract class CardsDatabase() : RoomDatabase() {
-    abstract var cardsDao: CardsDao
+    abstract val cardsDao: CardsDao
 
     companion object {
         @Volatile
-        var INSTANCE: CardsDatabase? = null
+        private var INSTANCE: CardsDatabase? = null
 
         fun getInstance(context: Context): CardsDatabase {
             var instance = INSTANCE
             if (instance == null) {
                 instance = Room.databaseBuilder(
-                    context,
+                    context.applicationContext,
                     CardsDatabase::class.java,
                     "CardsDB"
                 ).fallbackToDestructiveMigration().build()

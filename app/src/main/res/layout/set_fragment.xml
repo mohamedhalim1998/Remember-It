@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.mohamed.halim.essa.flashcards.setscreen.SetViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".setscreen.SetFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sets_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_action_add"
+            android:onClick="@{() -> viewModel.showAddSetDialog()}"/>
+    </FrameLayout>
+</layout>

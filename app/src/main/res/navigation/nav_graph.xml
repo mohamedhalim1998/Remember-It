@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/setFragment">
+
+    <fragment
+        android:id="@+id/setFragment"
+        android:name="com.mohamed.halim.essa.flashcards.setscreen.SetFragment"
+        android:label="set_fragment"
+        tools:layout="@layout/set_fragment" />
+</navigation>
