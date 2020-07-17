@@ -27,6 +27,7 @@ class SetFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        requireActivity().title = getString(R.string.app_name)
         binding = DataBindingUtil.inflate(inflater, R.layout.set_fragment, container, false)
         binding.lifecycleOwner = this
         setupViewModel()

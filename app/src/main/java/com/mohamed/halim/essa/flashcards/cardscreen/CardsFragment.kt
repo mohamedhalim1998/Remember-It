@@ -15,7 +15,6 @@ import com.mohamed.halim.essa.flashcards.data.CardsDatabase
 import com.mohamed.halim.essa.flashcards.data.DataSource
 import com.mohamed.halim.essa.flashcards.databinding.CardsFragmentBinding
 
-// TODO: Change the title to the set name
 class CardsFragment : Fragment() {
     private lateinit var adapter: CardAdapter
     private lateinit var viewModel: CardsViewModel
@@ -41,6 +40,7 @@ class CardsFragment : Fragment() {
     private fun setupCardsObserver() {
         viewModel.cardSet.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it?.cards!!.toList())
+            requireActivity().title = it.name
         })
     }
 
