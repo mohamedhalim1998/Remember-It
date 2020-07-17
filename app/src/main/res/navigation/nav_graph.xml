@@ -9,5 +9,31 @@
         android:id="@+id/setFragment"
         android:name="com.mohamed.halim.essa.flashcards.setscreen.SetFragment"
         android:label="set_fragment"
-        tools:layout="@layout/set_fragment" />
+        tools:layout="@layout/set_fragment" >
+        <action
+            android:id="@+id/action_setFragment_to_cardsFragment"
+            app:destination="@id/cardsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardsFragment"
+        android:name="com.mohamed.halim.essa.flashcards.cardscreen.CardsFragment"
+        android:label="CardsFragment" >
+        <action
+            android:id="@+id/action_cardsFragment_to_setFragment"
+            app:destination="@id/setFragment" />
+        <argument
+            android:name="cardSetId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_cardsFragment_to_addCardFragment"
+            app:destination="@id/addCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCardFragment"
+        android:name="com.mohamed.halim.essa.flashcards.addcardscreen.AddCardFragment"
+        android:label="AddCardFragment" >
+        <action
+            android:id="@+id/action_addCardFragment_to_cardsFragment"
+            app:destination="@id/cardsFragment" />
+    </fragment>
 </navigation>

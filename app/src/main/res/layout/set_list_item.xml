@@ -8,6 +8,10 @@
         <variable
             name="cardSet"
             type="com.mohamed.halim.essa.flashcards.data.model.CardSet" />
+
+        <variable
+            name="clickLister"
+            type="com.mohamed.halim.essa.flashcards.setscreen.CardSetClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -15,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:elevation="16dp"
+        android:onClick="@{() -> clickLister.onClick(cardSet)}"
         app:cardCornerRadius="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

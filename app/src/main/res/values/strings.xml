@@ -2,4 +2,6 @@
     <string name="app_name">Flash Cards</string>
     <string name="done">Done</string>
     <string name="set_add_hint">Enter the set name</string>
+    <string name="second_side">Second Side</string>
+    <string name="first_side">First Side</string>
 </resources>

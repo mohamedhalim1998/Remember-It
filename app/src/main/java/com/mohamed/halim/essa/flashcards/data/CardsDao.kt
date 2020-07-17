@@ -1,5 +1,6 @@
 package com.mohamed.halim.essa.flashcards.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mohamed.halim.essa.flashcards.data.model.CardSet
 import io.reactivex.Flowable
@@ -9,10 +10,13 @@ import io.reactivex.Single
 interface CardsDao {
     @Insert
     fun addSet(cardSet: CardSet)
+
     @Query("SELECT * FROM card_set")
-    fun getAllSets() : Flowable<List<CardSet>>
+    fun getAllSets(): Flowable<List<CardSet>>
+
     @Query("SELECT * FROM card_set WHERE :id = id")
-    fun getSet(id : Long) : Single<CardSet>
+    fun getSet(id: Long): Flowable<CardSet>
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateSet(cardSet: CardSet)
 }

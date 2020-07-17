@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.mohamed.halim.essa.flashcards.data.model.CardSet
 import com.mohamed.halim.essa.flashcards.util.RoomConverters
 
-@Database(entities = [CardSet::class], version = 1)
+@Database(entities = [CardSet::class], version = 2)
 @TypeConverters(RoomConverters::class)
 abstract class CardsDatabase() : RoomDatabase() {
     abstract val cardsDao: CardsDao

@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mohamed.halim.essa.flashcards.data.model.CardSet
 import com.mohamed.halim.essa.flashcards.databinding.SetListItemBinding
 
-class CardSetAdapter : ListAdapter<CardSet, CardSetViewHolder>(CardSetDiffCallBacks()) {
+class CardSetAdapter(val clickListener: CardSetClickListener) :
+    ListAdapter<CardSet, CardSetViewHolder>(CardSetDiffCallBacks()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardSetViewHolder {
         return CardSetViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: CardSetViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), clickListener)
     }
 
 }
@@ -34,8 +35,10 @@ class CardSetViewHolder private constructor(val binding: SetListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(
         cardSet: CardSet
+    , clickListener: CardSetClickListener
     ) {
         binding.cardSet = cardSet
+        binding.clickLister = clickListener
         binding.executePendingBindings()
     }
 

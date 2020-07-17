@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
@@ -65,14 +66,16 @@ class SetFragment : Fragment() {
 
     private fun setupViewModel() {
         val database = CardsDatabase.getInstance(requireContext()).cardsDao
-        val dataSource = DataSource(database)
+        val dataSource = DataSource.getInstance(database)
         val factory = SetViewModelFactory(dataSource)
         viewModel = ViewModelProvider(this, factory).get(SetViewModel::class.java)
         binding.viewModel = viewModel
     }
 
     private fun setupRecycleView() {
-        adapter = CardSetAdapter()
+        adapter = CardSetAdapter(CardSetClickListener {
+            findNavController().navigate(SetFragmentDirections.actionSetFragmentToCardsFragment(it))
+        })
         val manager = LinearLayoutManager(requireContext())
         binding.setsList.adapter = adapter
         binding.setsList.layoutManager = manager
