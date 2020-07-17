@@ -12,7 +12,11 @@
         tools:layout="@layout/set_fragment" >
         <action
             android:id="@+id/action_setFragment_to_cardsFragment"
-            app:destination="@id/cardsFragment" />
+            app:destination="@id/cardsFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/cardsFragment"
@@ -20,13 +24,21 @@
         android:label="CardsFragment" >
         <action
             android:id="@+id/action_cardsFragment_to_setFragment"
-            app:destination="@id/setFragment" />
+            app:destination="@id/setFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
         <argument
             android:name="cardSetId"
             app:argType="long" />
         <action
             android:id="@+id/action_cardsFragment_to_addCardFragment"
-            app:destination="@id/addCardFragment" />
+            app:destination="@id/addCardFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/addCardFragment"
@@ -34,6 +46,10 @@
         android:label="AddCardFragment" >
         <action
             android:id="@+id/action_addCardFragment_to_cardsFragment"
-            app:destination="@id/cardsFragment" />
+            app:destination="@id/cardsFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
 </navigation>
