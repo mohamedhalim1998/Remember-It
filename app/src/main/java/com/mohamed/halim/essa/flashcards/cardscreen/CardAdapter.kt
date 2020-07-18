@@ -1,15 +1,14 @@
 package com.mohamed.halim.essa.flashcards.cardscreen
 
-import android.animation.*
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mohamed.halim.essa.flashcards.data.model.Card
 import com.mohamed.halim.essa.flashcards.databinding.CardListItemBinding
+import com.mohamed.halim.essa.flashcards.util.flipCard
 
 class CardAdapter() :
     ListAdapter<Card, CardViewHolder>(CardDiffCallBacks()) {
@@ -41,33 +40,8 @@ class CardViewHolder private constructor(val binding: CardListItemBinding) :
     ) {
         binding.executePendingBindings()
         binding.card = card
-        binding.root.setOnClickListener {
-            animate(card, it, binding.cardText)
-        }
-    }
-
-    private fun animate(card: Card, view: View, cardText: TextView) {
-        ObjectAnimator.ofFloat(view, View.ROTATION_Y, -180f, 0f).apply {
-            repeatMode = ObjectAnimator.REVERSE
-            cardText.visibility = View.INVISIBLE
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
-                    changeText(card)
-                    cardText.visibility = View.VISIBLE
-                }
-            })
-            start()
-        }
-
-    }
-
-    private fun changeText(card: Card) {
-        binding.cardText.apply {
-            text = if (text == card.firstSide) {
-                card.secondSide
-            } else {
-                card.firstSide
-            }
+        binding.cardView.setOnClickListener {
+            (it as CardView).flipCard(card, binding.cardText)
         }
     }
 

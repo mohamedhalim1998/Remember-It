@@ -1,11 +1,9 @@
 package com.mohamed.halim.essa.flashcards.cardscreen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -24,6 +22,7 @@ class CardsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         binding = DataBindingUtil.inflate(inflater, R.layout.cards_fragment, container, false)
         binding.lifecycleOwner = this
         setupViewModel()
@@ -71,5 +70,24 @@ class CardsFragment : Fragment() {
         val manager = GridLayoutManager(requireContext(), 3)
         binding.cardsList.adapter = adapter
         binding.cardsList.layoutManager = manager
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.cards_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.practice -> {
+                findNavController().navigate(
+                    CardsFragmentDirections.actionCardsFragmentToPracticeFragment(
+                        getCardSetId()
+                    )
+                )
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

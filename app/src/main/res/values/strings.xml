@@ -4,4 +4,9 @@
     <string name="set_add_hint">Enter the set name</string>
     <string name="second_side">Second Side</string>
     <string name="first_side">First Side</string>
+    <string name="practice">Practice</string>
+    <string name="got_it">Got It</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="score">Score</string>
 </resources>
