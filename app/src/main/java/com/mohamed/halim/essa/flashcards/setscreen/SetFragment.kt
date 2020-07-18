@@ -1,24 +1,24 @@
 package com.mohamed.halim.essa.flashcards.setscreen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
-import com.google.android.material.dialog.MaterialDialogs
 import com.mohamed.halim.essa.flashcards.R
 import com.mohamed.halim.essa.flashcards.data.CardsDatabase
 import com.mohamed.halim.essa.flashcards.data.DataSource
+import com.mohamed.halim.essa.flashcards.data.model.CardSet
 import com.mohamed.halim.essa.flashcards.databinding.SetFragmentBinding
 
-class SetFragment : Fragment() {
+class SetFragment : Fragment(), CardSetOptionMenu {
 
     lateinit var binding: SetFragmentBinding
     lateinit var adapter: CardSetAdapter
@@ -55,13 +55,27 @@ class SetFragment : Fragment() {
         })
     }
 
-    private fun showAddSetDialog() {
-        MaterialDialog(requireContext()).show {
-            input(hintRes = R.string.set_add_hint) { materialDialog, charSequence ->
-                viewModel.addCardSet(charSequence.toString())
-                viewModel.hideAddSetDialog()
+    private fun showAddSetDialog(cardSet: CardSet? = null) {
+        if (cardSet == null) {
+            MaterialDialog(requireContext()).show {
+                input(hintRes = R.string.set_add_hint) { materialDialog, charSequence ->
+                    viewModel.addCardSet(charSequence.toString())
+                    viewModel.hideAddSetDialog()
+                }
+                positiveButton(R.string.done)
             }
-            positiveButton(R.string.done)
+        } else {
+            MaterialDialog(requireContext()).show {
+                input(
+                    hintRes = R.string.set_add_hint,
+                    prefill = cardSet.name
+                ) { materialDialog, charSequence ->
+                    cardSet.name = charSequence.toString()
+                    viewModel.updateCardSet(cardSet)
+                    viewModel.hideAddSetDialog()
+                }
+                positiveButton(R.string.done)
+            }
         }
     }
 
@@ -74,12 +88,26 @@ class SetFragment : Fragment() {
     }
 
     private fun setupRecycleView() {
-        adapter = CardSetAdapter(CardSetClickListener {
-            findNavController().navigate(SetFragmentDirections.actionSetFragmentToCardsFragment(it))
-        })
+        adapter = CardSetAdapter(
+            CardSetClickListener {
+                findNavController().navigate(
+                    SetFragmentDirections.actionSetFragmentToCardsFragment(
+                        it
+                    )
+                )
+            }, this
+        )
         val manager = LinearLayoutManager(requireContext())
         binding.setsList.adapter = adapter
         binding.setsList.layoutManager = manager
+    }
+
+    override fun editCardSet(cardSet: CardSet) {
+        showAddSetDialog(cardSet)
+    }
+
+    override fun deleteCardSet(cardSet: CardSet) {
+        viewModel.deleteCardSet(cardSet)
     }
 
 }

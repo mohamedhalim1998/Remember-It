@@ -9,4 +9,6 @@
     <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="score">Score</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

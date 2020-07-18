@@ -1,10 +1,8 @@
 package com.mohamed.halim.essa.flashcards.data
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mohamed.halim.essa.flashcards.data.model.CardSet
 import io.reactivex.Flowable
-import io.reactivex.Single
 
 @Dao
 interface CardsDao {
@@ -19,4 +17,7 @@ interface CardsDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateSet(cardSet: CardSet)
+
+    @Delete
+    fun deleteSet(cardSet: CardSet)
 }
