@@ -34,12 +34,12 @@ class CardsFragment : Fragment() {
     private fun setupObservers() {
         setupCardsObserver()
         setupAddCardNavigationObserver()
+        setupCardSetObserver()
     }
 
     private fun setupCardsObserver() {
         viewModel.cards.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
-            //requireActivity().title = it.name
         })
     }
 
@@ -53,6 +53,12 @@ class CardsFragment : Fragment() {
                 )
                 viewModel.doneNavigation()
             }
+        })
+    }
+
+    private fun setupCardSetObserver() {
+        viewModel.cardSet.observe(viewLifecycleOwner, Observer {
+            requireActivity().title = it.name
         })
     }
 

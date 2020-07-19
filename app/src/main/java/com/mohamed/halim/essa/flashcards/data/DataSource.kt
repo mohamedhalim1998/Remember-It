@@ -2,7 +2,6 @@ package com.mohamed.halim.essa.flashcards.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.MediatorLiveData
 import com.mohamed.halim.essa.flashcards.data.model.Card
 import com.mohamed.halim.essa.flashcards.data.model.CardSet
 import io.reactivex.Observable
@@ -11,7 +10,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class DataSource private constructor(private val database: CardsDao) {
-    private val cardSet = MediatorLiveData<CardSet>()
     private val disposables = CompositeDisposable()
 
     companion object {
@@ -44,16 +42,13 @@ class DataSource private constructor(private val database: CardsDao) {
         )
     }
 
-    //    fun getCardSet(id: Long): LiveData<CardSet> {
-//        val source = LiveDataReactiveStreams.fromPublisher(
-//            database.getSet(id).subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//        )
-//        cardSet.addSource(source) {
-//            cardSet.value = it
-//        }
-//        return cardSet
-//    }
+    fun getCardSet(id: Long): LiveData<CardSet> {
+        return LiveDataReactiveStreams.fromPublisher(
+            database.getSet(id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        )
+    }
+
     fun getCardsFromSet(id: Long): LiveData<List<Card>> {
         return LiveDataReactiveStreams.fromPublisher(
             database.getAllCardsInSet(id).subscribeOn(Schedulers.io())
