@@ -1,3 +1,22 @@
 package com.mohamed.halim.essa.flashcards.data.model
 
-data class Card(val id: Int, val firstSide: String, val secondSide: String)
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
+import androidx.room.PrimaryKey
+
+@Entity(
+    foreignKeys = [ForeignKey(
+        entity = CardSet::class,
+        parentColumns = ["id"], childColumns = ["cardSetId"],
+        onDelete = CASCADE
+    )], tableName = "card"
+)
+data class Card(
+    var firstSide: String,
+    var secondSide: String,
+    val cardSetId: Long,
+    @PrimaryKey(autoGenerate = true)
+    var cardId: Long? = null
+
+)

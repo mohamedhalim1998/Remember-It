@@ -1,6 +1,7 @@
 package com.mohamed.halim.essa.flashcards.data
 
 import androidx.room.*
+import com.mohamed.halim.essa.flashcards.data.model.Card
 import com.mohamed.halim.essa.flashcards.data.model.CardSet
 import io.reactivex.Flowable
 
@@ -20,4 +21,16 @@ interface CardsDao {
 
     @Delete
     fun deleteSet(cardSet: CardSet)
+
+    @Insert
+    fun addCard(card: Card)
+
+    @Update
+    fun updateCard(card: Card)
+
+    @Query("SELECT * FROM card WHERE :cardSetId = cardSetId")
+    fun getAllCardsInSet(cardSetId: Long): Flowable<List<Card>>
+
+    @Query("SELECT * FROM card WHERE :id = cardId")
+    fun getCard(id: Long): Flowable<Card>
 }

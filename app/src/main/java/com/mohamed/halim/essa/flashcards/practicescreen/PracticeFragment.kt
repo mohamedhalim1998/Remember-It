@@ -61,54 +61,29 @@ class PracticeFragment : Fragment() {
 
     private fun setupObservers() {
         observeCardSet()
-        observeNextCard()
-        observePrevCard()
         observeCurrentItem()
     }
 
     private fun observeCardSet() {
-        viewModel.cardSet.observe(viewLifecycleOwner, Observer {
-            adapter.swapCards(it?.cards)
-        })
-    }
-
-    private fun observeNextCard() {
-        viewModel.nextCard.observe(viewLifecycleOwner, Observer {
-            if (it != null && it) {
-                var current = viewModel.currentItem.value!!
-                if (current < adapter.itemCount - 1) {
-                    current = current.plus(1)
-                    cardViewPager.setCurrentItem(current, true)
-                } else {
-                    viewModel.updateCurrentItem(current.plus(1))
-                }
-                viewModel.moveToNextCardFinished()
-            }
-        })
-    }
-
-    private fun observePrevCard() {
-        viewModel.prevCard.observe(viewLifecycleOwner, Observer {
-            if (it != null && it) {
-                var current = viewModel.currentItem.value!!
-                Timber.d("current = $current")
-                if (current > 0) {
-                    current = current.minus(1)
-                    cardViewPager.setCurrentItem(current, true)
-                }
-                viewModel.moveToPrevCardFinished()
-            }
+        viewModel.cards.observe(viewLifecycleOwner, Observer {
+            adapter.swapCards(it)
         })
     }
 
     private fun observeCurrentItem() {
         viewModel.currentItem.observe(viewLifecycleOwner, Observer {
-            if (it == 0) {
-                binding.back.isEnabled = false
-            } else if (it == adapter.itemCount) {
-                showFinishScreen()
-            } else {
-                showScoreScreen()
+            when (it) {
+                0 -> {
+                    binding.back.isEnabled = false
+                    cardViewPager.setCurrentItem(it, true)
+                }
+                adapter.itemCount -> {
+                    showFinishScreen()
+                }
+                else -> {
+                    showScoreScreen()
+                    cardViewPager.setCurrentItem(it, true)
+                }
             }
             Timber.d("$it")
         })

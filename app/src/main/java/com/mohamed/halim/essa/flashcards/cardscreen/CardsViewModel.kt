@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.mohamed.halim.essa.flashcards.data.DataSource
 
 class CardsViewModel(val dataSource: DataSource, val cardSetId: Long) : ViewModel() {
-    val cardSet = dataSource.getCardSet(cardSetId)
+    val cards = dataSource.getCardsFromSet(cardSetId)
     private val _addCardNavigation = MutableLiveData<Boolean>()
     val addCardNavigation: LiveData<Boolean>
         get() = _addCardNavigation

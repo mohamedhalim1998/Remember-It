@@ -10,7 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class DataSource private constructor(val database: CardsDao) {
+class DataSource private constructor(private val database: CardsDao) {
     private val cardSet = MediatorLiveData<CardSet>()
     private val disposables = CompositeDisposable()
 
@@ -44,29 +44,30 @@ class DataSource private constructor(val database: CardsDao) {
         )
     }
 
-    fun getCardSet(id: Long): LiveData<CardSet> {
-        val source = LiveDataReactiveStreams.fromPublisher(
-            database.getSet(id).subscribeOn(Schedulers.io())
+    //    fun getCardSet(id: Long): LiveData<CardSet> {
+//        val source = LiveDataReactiveStreams.fromPublisher(
+//            database.getSet(id).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//        )
+//        cardSet.addSource(source) {
+//            cardSet.value = it
+//        }
+//        return cardSet
+//    }
+    fun getCardsFromSet(id: Long): LiveData<List<Card>> {
+        return LiveDataReactiveStreams.fromPublisher(
+            database.getAllCardsInSet(id).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
         )
-        cardSet.addSource(source) {
-            cardSet.value = it
-        }
-        return cardSet
     }
 
     fun addCard(card: Card) {
-        val set = cardSet.value
-        if (set != null) {
-            set.cards.add(card)
-            disposables.add(
-                Observable.fromCallable {
-                    database.updateSet(
-                        set
-                    )
-                }.subscribeOn(Schedulers.io()).subscribe()
-            )
-        }
+        disposables.add(
+            Observable.fromCallable {
+                database.addCard(card)
+            }.subscribeOn(Schedulers.io()).subscribe()
+        )
+
     }
 
     fun updateCardSet(cardSet: CardSet) {

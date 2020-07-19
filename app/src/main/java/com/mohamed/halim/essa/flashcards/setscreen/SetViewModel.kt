@@ -23,7 +23,7 @@ class SetViewModel(val dataSource: DataSource) : ViewModel() {
     }
 
     fun addCardSet(name: String) {
-        dataSource.addCardSet(CardSet(name = name, cards = mutableListOf()))
+        dataSource.addCardSet(CardSet(name = name))
     }
 
     fun updateCardSet(cardSet: CardSet) {

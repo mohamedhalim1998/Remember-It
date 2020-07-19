@@ -17,7 +17,7 @@ class CardsFragment : Fragment() {
     private lateinit var adapter: CardAdapter
     private lateinit var viewModel: CardsViewModel
     private lateinit var binding: CardsFragmentBinding
-
+    private var cardSetId = -1L
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,16 +37,20 @@ class CardsFragment : Fragment() {
     }
 
     private fun setupCardsObserver() {
-        viewModel.cardSet.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it?.cards!!.toList())
-            requireActivity().title = it.name
+        viewModel.cards.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+            //requireActivity().title = it.name
         })
     }
 
     private fun setupAddCardNavigationObserver() {
         viewModel.addCardNavigation.observe(viewLifecycleOwner, Observer {
             if (it != null && it) {
-                findNavController().navigate(CardsFragmentDirections.actionCardsFragmentToAddCardFragment())
+                findNavController().navigate(
+                    CardsFragmentDirections.actionCardsFragmentToAddCardFragment(
+                        cardSetId
+                    )
+                )
                 viewModel.doneNavigation()
             }
         })
@@ -55,8 +59,8 @@ class CardsFragment : Fragment() {
     private fun setupViewModel() {
         val database = CardsDatabase.getInstance(requireContext()).cardsDao
         val dataSource = DataSource.getInstance(database)
-        val id = getCardSetId()
-        val factory = CardsViewModelFactory(dataSource, id)
+        cardSetId = getCardSetId()
+        val factory = CardsViewModelFactory(dataSource, cardSetId)
         viewModel = ViewModelProvider(this, factory).get(CardsViewModel::class.java)
         binding.viewModel = viewModel
     }

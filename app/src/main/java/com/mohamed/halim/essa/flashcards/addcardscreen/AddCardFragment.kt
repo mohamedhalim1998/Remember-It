@@ -2,24 +2,21 @@ package com.mohamed.halim.essa.flashcards.addcardscreen
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mohamed.halim.essa.flashcards.R
 import com.mohamed.halim.essa.flashcards.data.CardsDatabase
 import com.mohamed.halim.essa.flashcards.data.DataSource
 import com.mohamed.halim.essa.flashcards.data.model.Card
 import com.mohamed.halim.essa.flashcards.databinding.AddCardFragmentBinding
-import com.mohamed.halim.essa.flashcards.setscreen.SetViewModel
-import com.mohamed.halim.essa.flashcards.setscreen.SetViewModelFactory
-import java.util.*
 
 class AddCardFragment : Fragment() {
 
 
     private lateinit var viewModel: AddCardViewModel
     private lateinit var binding: AddCardFragmentBinding
-
+    private var cardSetId = -1L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -31,6 +28,7 @@ class AddCardFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_card_fragment, container, false)
         binding.lifecycleOwner = this
+        cardSetId = requireArguments().getLong("cardSetId")
         setupViewModel()
         return binding.root
     }
@@ -59,10 +57,10 @@ class AddCardFragment : Fragment() {
 
     private fun addCard() {
         val card = Card(
-            Random().nextInt(), binding.firstSide.text.toString(),
-            binding.secondSide.text.toString()
+            binding.firstSide.text.toString(),
+            binding.secondSide.text.toString(),
+            cardSetId
         )
-
         viewModel.addCard(card)
     }
 

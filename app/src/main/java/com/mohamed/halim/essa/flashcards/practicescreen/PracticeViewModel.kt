@@ -6,20 +6,15 @@ import androidx.lifecycle.ViewModel
 import com.mohamed.halim.essa.flashcards.data.DataSource
 import timber.log.Timber
 
-class PracticeViewModel(private val dataSource: DataSource, private val cardSetId: Long) :
+class PracticeViewModel(dataSource: DataSource, private val cardSetId: Long) :
     ViewModel() {
-    val cardSet = dataSource.getCardSet(cardSetId)
+    val cards = dataSource.getCardsFromSet(cardSetId)
     val scoreMap = HashMap<Int, Boolean>()
     private val _score = MutableLiveData<Int>()
-    private val _nextCard = MutableLiveData<Boolean>()
-    private val _prevCard = MutableLiveData<Boolean>()
+
     private val _currentItem = MutableLiveData<Int>()
     val score: LiveData<Int>
         get() = _score
-    val nextCard: LiveData<Boolean>
-        get() = _nextCard
-    val prevCard: LiveData<Boolean>
-        get() = _prevCard
     val currentItem: LiveData<Int>
         get() = _currentItem
 
@@ -30,36 +25,27 @@ class PracticeViewModel(private val dataSource: DataSource, private val cardSetI
 
     fun updateScore() {
         _score.value = _score.value?.plus(1)
-        scoreMap[getCardId(currentItem.value!!)] = true
+        scoreMap[getCardId()] = true
         moveToNext()
     }
 
-    private fun getCardId(i: Int): Int {
-        return cardSet.value!!.cards[i].id
+    private fun getCardId(): Int {
+        return cards.value!![currentItem.value!!].cardId!!.toInt()
     }
 
     fun moveToNext() {
-        _nextCard.value = true
-    }
-
-    fun moveToNextCardFinished() {
-        _nextCard.value = null
+        _currentItem.value = _currentItem.value!!.plus(1)
     }
 
     fun moveToPrev() {
-        _prevCard.value = true
-    }
-
-    fun moveToPrevCardFinished() {
-        _prevCard.value = null
-    }
-
-    fun updateCurrentItem(i: Int) {
-        if (_currentItem.value!! > i && scoreMap.getOrElse(getCardId(i), { false })) {
+        _currentItem.value = _currentItem.value!!.minus(1)
+        if (scoreMap.getOrElse(getCardId(), { false })) {
             Timber.d("back")
             _score.value = _score.value?.minus(1)
         }
-        _currentItem.value = i
+    }
 
+    fun updateCurrentItem(i: Int) {
+        _currentItem.value = i
     }
 }
