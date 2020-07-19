@@ -8,13 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.mohamed.halim.essa.flashcards.data.model.Card
-import com.mohamed.halim.essa.flashcards.util.Direction.BACKWAED
+import com.mohamed.halim.essa.flashcards.util.Direction.BACKWARD
 import com.mohamed.halim.essa.flashcards.util.Direction.FORWARD
 
 fun CardView.flipCard(card: Card, cardText: TextView, optionMenIcon: ImageView? = null) {
 
     val animator = if (cardText.text == card.firstSide) setUpObjectAnimator(this, FORWARD)
-    else setUpObjectAnimator(this, BACKWAED)
+    else setUpObjectAnimator(this, BACKWARD)
     animator.apply {
         repeatMode = ObjectAnimator.REVERSE
         cardText.visibility = View.INVISIBLE
@@ -34,7 +34,7 @@ fun CardView.flipCard(card: Card, cardText: TextView, optionMenIcon: ImageView? 
 fun setUpObjectAnimator(view: View, direction: Direction): ObjectAnimator {
     return when (direction) {
         FORWARD -> ObjectAnimator.ofFloat(view, View.ROTATION_Y, -180f, 0f)
-        BACKWAED -> ObjectAnimator.ofFloat(view, View.ROTATION_Y, 180f, 0f)
+        BACKWARD -> ObjectAnimator.ofFloat(view, View.ROTATION_Y, 180f, 0f)
     }
 }
 
@@ -48,5 +48,5 @@ fun TextView.changeText(card: Card) {
 }
 
 enum class Direction {
-    FORWARD, BACKWAED
+    FORWARD, BACKWARD
 }
