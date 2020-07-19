@@ -61,6 +61,9 @@
         <argument
             android:name="cardSetId"
             app:argType="long" />
+        <argument
+            android:name="cardId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/practiceFragment"

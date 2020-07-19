@@ -84,6 +84,29 @@ class DataSource private constructor(private val database: CardsDao) {
 
     }
 
+    fun getCard(cardId: Long): LiveData<Card> {
+        return LiveDataReactiveStreams.fromPublisher(
+            database.getCard(cardId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        )
+    }
+
+    fun deleteCard(card: Card) {
+        disposables.add(
+            Observable.fromCallable {
+                database.deleteCard(card)
+            }.subscribeOn(Schedulers.io()).subscribe()
+        )
+    }
+
+    fun updateCard(card: Card) {
+        disposables.add(
+            Observable.fromCallable {
+                database.updateCard(card)
+            }.subscribeOn(Schedulers.io()).subscribe()
+        )
+    }
+
     fun clear() {
         disposables.clear()
     }

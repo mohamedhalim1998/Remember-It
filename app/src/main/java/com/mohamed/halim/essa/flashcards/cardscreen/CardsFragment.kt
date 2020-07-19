@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.mohamed.halim.essa.flashcards.R
 import com.mohamed.halim.essa.flashcards.data.CardsDatabase
 import com.mohamed.halim.essa.flashcards.data.DataSource
+import com.mohamed.halim.essa.flashcards.data.model.Card
 import com.mohamed.halim.essa.flashcards.databinding.CardsFragmentBinding
 
 class CardsFragment : Fragment() {
@@ -49,6 +50,7 @@ class CardsFragment : Fragment() {
                 findNavController().navigate(
                     CardsFragmentDirections.actionCardsFragmentToAddCardFragment(
                         cardSetId
+                        , -1
                     )
                 )
                 viewModel.doneNavigation()
@@ -76,10 +78,33 @@ class CardsFragment : Fragment() {
     }
 
     private fun setupRecycleView() {
-        adapter = CardAdapter()
+        adapter = CardAdapter(createCardOptionMenu())
         val manager = GridLayoutManager(requireContext(), 3)
         binding.cardsList.adapter = adapter
         binding.cardsList.layoutManager = manager
+    }
+
+    private fun createCardOptionMenu(): CardOptionMenu {
+        return object : CardOptionMenu {
+            override fun editCard(card: Card) {
+                findNavController().navigate(
+                    CardsFragmentDirections.actionCardsFragmentToAddCardFragment(
+                        cardSetId,
+                        card.cardId!!
+                    )
+                )
+            }
+
+            override fun deleteCard(card: Card) {
+                viewModel.deleteCard(card)
+            }
+
+            override fun viewCard(card: Card) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -96,7 +121,6 @@ class CardsFragment : Fragment() {
                 )
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }

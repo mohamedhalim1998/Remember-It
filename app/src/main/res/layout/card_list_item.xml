@@ -15,8 +15,8 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_margin="4dp"
-        android:padding="8dp"
         android:elevation="16dp"
+        android:padding="8dp"
         app:cardCornerRadius="16dp">
 
         <TextView
@@ -30,6 +30,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="English" />
+
+        <ImageView
+            android:id="@+id/option_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_option_menu"
+            android:clickable="true"
+            android:focusable="true" />
 
     </androidx.cardview.widget.CardView>
 </layout>

@@ -1,23 +1,26 @@
 package com.mohamed.halim.essa.flashcards.cardscreen
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mohamed.halim.essa.flashcards.R
 import com.mohamed.halim.essa.flashcards.data.model.Card
 import com.mohamed.halim.essa.flashcards.databinding.CardListItemBinding
 import com.mohamed.halim.essa.flashcards.util.flipCard
 
-class CardAdapter() :
+class CardAdapter(private val cardOptionMenu: CardOptionMenu) :
     ListAdapter<Card, CardViewHolder>(CardDiffCallBacks()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         return CardViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), cardOptionMenu)
     }
 
 }
@@ -36,15 +39,53 @@ class CardDiffCallBacks : DiffUtil.ItemCallback<Card>() {
 class CardViewHolder private constructor(val binding: CardListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(
-        card: Card
+        card: Card,
+        cardOptionMenu: CardOptionMenu
     ) {
         binding.executePendingBindings()
         binding.card = card
         binding.cardView.setOnClickListener {
-            (it as CardView).flipCard(card, binding.cardText)
+            (it as CardView).flipCard(card, binding.cardText, binding.optionMenu)
         }
+        binding.optionMenu.setOnClickListener { view ->
+            val menuItemClickListener = createMenuItemClickListener(cardOptionMenu, card)
+            inflateOptionMenu(view, menuItemClickListener)
+        }
+
     }
 
+    private fun inflateOptionMenu(
+        view: View,
+        menuItemClickListener: PopupMenu.OnMenuItemClickListener
+    ) {
+        val popupMenu = PopupMenu(view.context, view)
+        popupMenu.setOnMenuItemClickListener(menuItemClickListener)
+        popupMenu.inflate(R.menu.card_option_menu)
+        popupMenu.show()
+    }
+
+    private fun createMenuItemClickListener(
+        cardOptionMenu: CardOptionMenu,
+        card: Card
+    ): PopupMenu.OnMenuItemClickListener {
+        return PopupMenu.OnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.edit_card -> {
+                    cardOptionMenu.editCard(card)
+                    true
+                }
+                R.id.delete_card -> {
+                    cardOptionMenu.deleteCard(card)
+                    true
+                }
+                R.id.view_card -> {
+                    cardOptionMenu.viewCard(card)
+                    true
+                }
+                else -> false
+            }
+        }
+    }
 
     companion object {
         fun from(parent: ViewGroup): CardViewHolder {
@@ -54,4 +95,10 @@ class CardViewHolder private constructor(val binding: CardListItemBinding) :
         }
     }
 
+}
+
+interface CardOptionMenu {
+    fun editCard(card: Card)
+    fun deleteCard(card: Card)
+    fun viewCard(card: Card)
 }

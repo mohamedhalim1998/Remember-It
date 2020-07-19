@@ -6,6 +6,7 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.mohamed.halim.essa.flashcards.R
 import com.mohamed.halim.essa.flashcards.data.CardsDatabase
@@ -19,6 +20,7 @@ class AddCardFragment : Fragment() {
     private lateinit var viewModel: AddCardViewModel
     private lateinit var binding: AddCardFragmentBinding
     private var cardSetId = -1L
+    private var cardId = -1L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -31,8 +33,19 @@ class AddCardFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_card_fragment, container, false)
         binding.lifecycleOwner = this
         cardSetId = requireArguments().getLong("cardSetId")
+        cardId = requireArguments().getLong("cardId")
         setupViewModel()
+        if (cardId != -1L) {
+            populateView()
+        }
         return binding.root
+    }
+
+    private fun populateView() {
+        viewModel.getCard(cardId).observe(viewLifecycleOwner, Observer {
+            binding.firstSide.setText(it.firstSide)
+            binding.secondSide.setText(it.secondSide)
+        })
     }
 
     private fun setupViewModel() {
@@ -49,7 +62,11 @@ class AddCardFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.add_card_action -> {
-                addCard()
+                if (cardId == -1L) {
+                    addCard()
+                } else {
+                    editCard()
+                }
                 hideKeyboard()
                 requireActivity().onBackPressed()
                 return true
@@ -73,5 +90,14 @@ class AddCardFragment : Fragment() {
         viewModel.addCard(card)
     }
 
+    private fun editCard() {
+        val card = Card(
+            binding.firstSide.text.toString(),
+            binding.secondSide.text.toString(),
+            cardSetId,
+            cardId
+        )
+        viewModel.updateCard(card)
+    }
 
 }

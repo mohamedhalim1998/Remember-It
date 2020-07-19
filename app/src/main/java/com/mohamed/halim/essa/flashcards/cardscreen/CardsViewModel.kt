@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mohamed.halim.essa.flashcards.data.DataSource
+import com.mohamed.halim.essa.flashcards.data.model.Card
 
 class CardsViewModel(val dataSource: DataSource, val cardSetId: Long) : ViewModel() {
     val cards = dataSource.getCardsFromSet(cardSetId)
@@ -19,6 +20,10 @@ class CardsViewModel(val dataSource: DataSource, val cardSetId: Long) : ViewMode
 
     fun doneNavigation() {
         _addCardNavigation.value = null
+    }
+
+    fun deleteCard(card: Card) {
+        dataSource.deleteCard(card)
     }
 
 }
