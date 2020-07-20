@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Flash Cards</string>
     <string name="done">Done</string>
     <string name="set_add_hint">Enter the set name</string>
@@ -12,4 +12,5 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="view">View</string>
+    <string name="score_text"><xliff:g example="25" id="score">%d</xliff:g> / <xliff:g example="25" id="max">%d</xliff:g></string>
 </resources>
