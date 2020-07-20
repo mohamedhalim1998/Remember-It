@@ -1,9 +1,9 @@
 package com.mohamed.halim.essa.flashcards.setscreen
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,6 +28,7 @@ class SetFragment : Fragment(), CardSetOptionMenu {
         savedInstanceState: Bundle?
     ): View? {
         requireActivity().title = getString(R.string.app_name)
+        setHasOptionsMenu(true)
         binding = DataBindingUtil.inflate(inflater, R.layout.set_fragment, container, false)
         binding.lifecycleOwner = this
         setupViewModel()
@@ -43,6 +44,7 @@ class SetFragment : Fragment(), CardSetOptionMenu {
 
     private fun setupCardSetObserver() {
         viewModel.cardSets.observe(viewLifecycleOwner, Observer {
+            adapter.original = it
             adapter.submitList(it)
         })
     }
@@ -77,6 +79,26 @@ class SetFragment : Fragment(), CardSetOptionMenu {
                 positiveButton(R.string.done)
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.card_set_menu, menu)
+
+        val searchItem: MenuItem? = menu.findItem(R.id.action_search)
+        val searchView: SearchView = searchItem?.actionView as SearchView
+        searchView.imeOptions = EditorInfo.IME_ACTION_DONE
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapter.cardSetFilter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.cardSetFilter.filter(newText)
+                return false
+            }
+
+        })
     }
 
     private fun setupViewModel() {

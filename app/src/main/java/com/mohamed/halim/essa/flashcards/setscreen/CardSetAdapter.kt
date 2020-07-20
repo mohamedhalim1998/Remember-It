@@ -2,6 +2,7 @@ package com.mohamed.halim.essa.flashcards.setscreen
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -15,12 +16,33 @@ class CardSetAdapter(
     val cardSetOptionMenu: CardSetOptionMenu
 ) :
     ListAdapter<CardSet, CardSetViewHolder>(CardSetDiffCallBacks()) {
+    var original: List<CardSet> = listOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardSetViewHolder {
         return CardSetViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: CardSetViewHolder, position: Int) {
         holder.bind(getItem(position), clickListener, cardSetOptionMenu)
+    }
+
+    val cardSetFilter = object : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val filterResult = FilterResults()
+            if (constraint == null || constraint.isEmpty()) {
+                filterResult.values = original
+            } else {
+                val filter = constraint.toString().toLowerCase().trim()
+                filterResult.values = original.filter { cardSet ->
+                    (cardSet.name.trim().toLowerCase().contains(filter))
+                }
+            }
+            return filterResult
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            submitList(results?.values as List<CardSet>)
+        }
+
     }
 
 }
