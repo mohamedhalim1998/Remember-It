@@ -78,7 +78,7 @@ class CardsFragment : Fragment() {
 
     private fun setupRecycleView() {
         adapter = CardAdapter(createCardOptionMenu())
-        val manager = GridLayoutManager(requireContext(), 3)
+        val manager = GridLayoutManager(requireContext(), 2)
         binding.cardsList.adapter = adapter
         binding.cardsList.layoutManager = manager
     }

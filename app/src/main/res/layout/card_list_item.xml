@@ -12,8 +12,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_margin="4dp"
         android:elevation="16dp"
         android:padding="8dp"
@@ -36,9 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:src="@drawable/ic_option_menu"
             android:clickable="true"
-            android:focusable="true" />
+            android:focusable="true"
+            android:src="@drawable/ic_option_menu" />
 
     </androidx.cardview.widget.CardView>
 </layout>
