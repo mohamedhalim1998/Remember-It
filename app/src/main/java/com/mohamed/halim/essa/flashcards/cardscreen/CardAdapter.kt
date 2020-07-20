@@ -71,15 +71,15 @@ class CardViewHolder private constructor(val binding: CardListItemBinding) :
         return PopupMenu.OnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.edit_card -> {
-                    cardOptionMenu.editCard(card)
+                    cardOptionMenu.editCard(card.cardId!!)
                     true
                 }
                 R.id.delete_card -> {
-                    cardOptionMenu.deleteCard(card)
+                    cardOptionMenu.deleteCard(card.cardId!!)
                     true
                 }
                 R.id.view_card -> {
-                    cardOptionMenu.viewCard(card)
+                    cardOptionMenu.viewCard(card.cardId!!)
                     true
                 }
                 else -> false
@@ -98,7 +98,7 @@ class CardViewHolder private constructor(val binding: CardListItemBinding) :
 }
 
 interface CardOptionMenu {
-    fun editCard(card: Card)
-    fun deleteCard(card: Card)
-    fun viewCard(card: Card)
+    fun editCard(cardId: Long)
+    fun deleteCard(cardId: Long)
+    fun viewCard(cardId: Long)
 }

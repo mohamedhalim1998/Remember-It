@@ -91,10 +91,10 @@ class DataSource private constructor(private val database: CardsDao) {
         )
     }
 
-    fun deleteCard(card: Card) {
+    fun deleteCard(cardId: Long) {
         disposables.add(
             Observable.fromCallable {
-                database.deleteCard(card)
+                database.deleteCard(cardId)
             }.subscribeOn(Schedulers.io()).subscribe()
         )
     }

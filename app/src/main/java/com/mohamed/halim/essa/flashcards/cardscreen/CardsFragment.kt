@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.mohamed.halim.essa.flashcards.R
 import com.mohamed.halim.essa.flashcards.data.CardsDatabase
 import com.mohamed.halim.essa.flashcards.data.DataSource
-import com.mohamed.halim.essa.flashcards.data.model.Card
 import com.mohamed.halim.essa.flashcards.databinding.CardsFragmentBinding
 
 class CardsFragment : Fragment() {
@@ -86,21 +85,25 @@ class CardsFragment : Fragment() {
 
     private fun createCardOptionMenu(): CardOptionMenu {
         return object : CardOptionMenu {
-            override fun editCard(card: Card) {
+            override fun editCard(cardId: Long) {
                 findNavController().navigate(
                     CardsFragmentDirections.actionCardsFragmentToAddCardFragment(
                         cardSetId,
-                        card.cardId!!
+                        cardId
                     )
                 )
             }
 
-            override fun deleteCard(card: Card) {
-                viewModel.deleteCard(card)
+            override fun deleteCard(cardId: Long) {
+                viewModel.deleteCard(cardId)
             }
 
-            override fun viewCard(card: Card) {
-                TODO("Not yet implemented")
+            override fun viewCard(cardId: Long) {
+                findNavController().navigate(
+                    CardsFragmentDirections.actionCardsFragmentToViewCardFragment(
+                        cardId
+                    )
+                )
             }
 
         }

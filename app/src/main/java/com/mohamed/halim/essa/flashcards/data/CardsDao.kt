@@ -34,6 +34,6 @@ interface CardsDao {
     @Query("SELECT * FROM card WHERE :id = cardId")
     fun getCard(id: Long): Flowable<Card>
 
-    @Delete
-    fun deleteCard(card: Card)
+    @Query("DELETE FROM card WHERE :cardId = cardId")
+    fun deleteCard(cardId: Long)
 }
