@@ -84,6 +84,10 @@ class SetFragment : Fragment(), CardSetOptionMenu {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.card_set_menu, menu)
 
+        setupSearch(menu)
+    }
+
+    private fun setupSearch(menu: Menu) {
         val searchItem: MenuItem? = menu.findItem(R.id.action_search)
         val searchView: SearchView = searchItem?.actionView as SearchView
         searchView.imeOptions = EditorInfo.IME_ACTION_DONE
