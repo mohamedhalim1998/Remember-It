@@ -2,6 +2,8 @@ package com.mohamed.halim.essa.flashcards.cardscreen
 
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.EditorInfo
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -39,6 +41,7 @@ class CardsFragment : Fragment() {
 
     private fun setupCardsObserver() {
         viewModel.cards.observe(viewLifecycleOwner, Observer {
+            adapter.originalList = it
             adapter.submitList(it)
         })
     }
@@ -112,6 +115,25 @@ class CardsFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.cards_menu, menu)
+        setupSearch(menu)
+    }
+
+    private fun setupSearch(menu: Menu) {
+        val searchItem: MenuItem? = menu.findItem(R.id.action_search)
+        val searchView: SearchView = searchItem?.actionView as SearchView
+        searchView.imeOptions = EditorInfo.IME_ACTION_DONE
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapter.cardFilter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.cardFilter.filter(newText)
+                return false
+            }
+
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

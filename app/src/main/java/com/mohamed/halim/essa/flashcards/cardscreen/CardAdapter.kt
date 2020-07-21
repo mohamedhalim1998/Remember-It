@@ -3,6 +3,7 @@ package com.mohamed.halim.essa.flashcards.cardscreen
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
 import android.widget.PopupMenu
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
@@ -15,12 +16,33 @@ import com.mohamed.halim.essa.flashcards.util.flipCard
 
 class CardAdapter(private val cardOptionMenu: CardOptionMenu) :
     ListAdapter<Card, CardViewHolder>(CardDiffCallBacks()) {
+    var originalList: List<Card> = listOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         return CardViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         holder.bind(getItem(position), cardOptionMenu)
+    }
+
+    val cardFilter = object : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val filterResults = FilterResults()
+            if (constraint.isNullOrEmpty()) {
+                filterResults.values = originalList
+            } else {
+                val filter = constraint.toString().toLowerCase().trim()
+                filterResults.values = originalList.filter { card ->
+                    (card.firstSide.toLowerCase().contains(filter) || card.secondSide.toLowerCase()
+                        .contains(filter))
+                }
+            }
+            return filterResults
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            submitList(results?.values as List<Card>)
+        }
     }
 
 }
