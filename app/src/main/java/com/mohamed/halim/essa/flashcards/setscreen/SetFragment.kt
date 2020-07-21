@@ -61,7 +61,7 @@ class SetFragment : Fragment(), CardSetOptionMenu {
         if (cardSet == null) {
             MaterialDialog(requireContext()).show {
                 input(hintRes = R.string.set_add_hint) { materialDialog, charSequence ->
-                    viewModel.addCardSet(charSequence.toString())
+                    viewModel.addCardSet(charSequence.toString().trim())
                     viewModel.hideAddSetDialog()
                 }
                 positiveButton(R.string.done)

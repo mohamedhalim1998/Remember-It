@@ -2,12 +2,14 @@ package com.mohamed.halim.essa.flashcards.addcardscreen
 
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.mohamed.halim.essa.flashcards.R
 import com.mohamed.halim.essa.flashcards.data.CardsDatabase
 import com.mohamed.halim.essa.flashcards.data.DataSource
@@ -62,10 +64,12 @@ class AddCardFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.add_card_action -> {
-                if (cardId == -1L) {
-                    addCard()
-                } else {
-                    editCard()
+                if (checkConstrains()) {
+                    if (cardId == -1L) {
+                        addCard()
+                    } else {
+                        editCard()
+                    }
                 }
                 hideKeyboard()
                 requireActivity().onBackPressed()
@@ -73,6 +77,15 @@ class AddCardFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun checkConstrains(): Boolean {
+        if (TextUtils.isEmpty(binding.firstSide.text) || TextUtils.isEmpty(binding.secondSide.text)) {
+            Snackbar.make(binding.root, "Can't save an empty side", Snackbar.LENGTH_LONG).show()
+            return false
+        } else {
+            return true
+        }
     }
 
     private fun hideKeyboard() {
@@ -92,8 +105,8 @@ class AddCardFragment : Fragment() {
 
     private fun editCard() {
         val card = Card(
-            binding.firstSide.text.toString(),
-            binding.secondSide.text.toString(),
+            binding.firstSide.text.toString().trim(),
+            binding.secondSide.text.toString().trim(),
             cardSetId,
             cardId
         )
