@@ -81,30 +81,6 @@ class SetFragment : Fragment(), CardSetOptionMenu {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.card_set_menu, menu)
-
-        setupSearch(menu)
-    }
-
-    private fun setupSearch(menu: Menu) {
-        val searchItem: MenuItem? = menu.findItem(R.id.action_search)
-        val searchView: SearchView = searchItem?.actionView as SearchView
-        searchView.imeOptions = EditorInfo.IME_ACTION_DONE
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                adapter.cardSetFilter.filter(query)
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                adapter.cardSetFilter.filter(newText)
-                return false
-            }
-
-        })
-    }
-
     private fun setupViewModel() {
         val database = CardsDatabase.getInstance(requireContext()).cardsDao
         val dataSource = DataSource.getInstance(database)
@@ -136,4 +112,38 @@ class SetFragment : Fragment(), CardSetOptionMenu {
         viewModel.deleteCardSet(cardSet)
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.card_set_menu, menu)
+
+        setupSearch(menu)
+    }
+
+    private fun setupSearch(menu: Menu) {
+        val searchItem: MenuItem? = menu.findItem(R.id.action_search)
+        val searchView: SearchView = searchItem?.actionView as SearchView
+        searchView.imeOptions = EditorInfo.IME_ACTION_DONE
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapter.cardSetFilter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.cardSetFilter.filter(newText)
+                return false
+            }
+
+        })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_preference -> {
+                findNavController().navigate(SetFragmentDirections.actionSetFragmentToPreferenceFragment())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }

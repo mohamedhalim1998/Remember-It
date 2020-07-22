@@ -17,6 +17,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_setFragment_to_preferenceFragment"
+            app:destination="@id/preferenceFragment" />
     </fragment>
     <fragment
         android:id="@+id/cardsFragment"
@@ -96,4 +99,8 @@
             android:name="cardId"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/preferenceFragment"
+        android:name="com.mohamed.halim.essa.flashcards.preferencescreen.PreferenceFragment"
+        android:label="PreferenceFragment" />
 </navigation>

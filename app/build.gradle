@@ -25,7 +25,7 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
         viewBinding = true
     }
@@ -72,6 +72,10 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
     implementation "android.arch.lifecycle:reactivestreams:1.1.1"
+    // material dialog
     implementation 'com.afollestad.material-dialogs:input:3.3.0'
+    implementation 'com.afollestad.material-dialogs:datetime:3.3.0'
+    // preference
+    implementation "androidx.preference:preference-ktx:1.1.1"
 
 }
