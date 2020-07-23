@@ -112,6 +112,15 @@ class SetFragment : Fragment(), CardSetOptionMenu {
         viewModel.deleteCardSet(cardSet)
     }
 
+    override fun addCard(cardSetId: Long) {
+        findNavController().navigate(
+            SetFragmentDirections.actionSetFragmentToAddCardFragment(
+                cardSetId,
+                -1
+            )
+        )
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.card_set_menu, menu)

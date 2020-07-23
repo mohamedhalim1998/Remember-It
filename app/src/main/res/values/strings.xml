@@ -21,4 +21,5 @@
     <string name="notification_content">You get better by practicing every day, Keep up</string>
     <string name="pref_practice_reminder_key">practice_reminder_key</string>
     <string name="pref_practice_reminder_title">Practice Reminder</string>
+    <string name="add_card">Add Card</string>
 </resources>

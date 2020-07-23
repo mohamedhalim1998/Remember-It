@@ -81,6 +81,10 @@ class CardSetViewHolder private constructor(val binding: SetListItemBinding) :
                         cardSetOptionMenu.deleteCardSet(cardSet)
                         true
                     }
+                    R.id.add_card_to_card_set -> {
+                        cardSetOptionMenu.addCard(cardSet.id!!)
+                        true
+                    }
                     else -> false
                 }
             }
@@ -109,5 +113,6 @@ class CardSetClickListener(val clickListener: (id: Long) -> Unit) {
 interface CardSetOptionMenu {
     fun editCardSet(cardSet: CardSet)
     fun deleteCardSet(cardSet: CardSet)
+    fun addCard(cardSetId: Long)
 
 }

@@ -19,19 +19,23 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_setFragment_to_preferenceFragment"
-            app:destination="@id/preferenceFragment" />
+            app:destination="@id/preferenceFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_setFragment_to_addCardFragment"
+            app:destination="@id/addCardFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/cardsFragment"
         android:name="com.mohamed.halim.essa.flashcards.cardscreen.CardsFragment"
         android:label="CardsFragment">
-        <action
-            android:id="@+id/action_cardsFragment_to_setFragment"
-            app:destination="@id/setFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="cardSetId"
             app:argType="long" />
@@ -61,13 +65,6 @@
         android:id="@+id/addCardFragment"
         android:name="com.mohamed.halim.essa.flashcards.addcardscreen.AddCardFragment"
         android:label="AddCardFragment">
-        <action
-            android:id="@+id/action_addCardFragment_to_cardsFragment"
-            app:destination="@id/cardsFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="cardSetId"
             app:argType="long" />
@@ -79,13 +76,6 @@
         android:id="@+id/practiceFragment"
         android:name="com.mohamed.halim.essa.flashcards.practicescreen.PracticeFragment"
         android:label="PracticeFragment">
-        <action
-            android:id="@+id/action_practiceFragment_to_cardsFragment"
-            app:destination="@id/cardsFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="cardSetId"
             app:argType="long" />
