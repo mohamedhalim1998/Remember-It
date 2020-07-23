@@ -4,13 +4,17 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.mohamed.halim.essa.flashcards.addcardscreen.AddCardViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        tools:background="#EEE"
         android:orientation="vertical"
+        android:padding="16dp"
         tools:context=".addcardscreen.AddCardFragment">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -56,6 +60,67 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:id="@+id/color_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/card_white"
+                android:onClick="@{() -> viewModel.changeColorToWhite()}"
+                tools:src="@drawable/ic_action_done_dark" />
+
+            <ImageView
+                android:id="@+id/color_yellow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/card_yellow"
+                android:onClick="@{() -> viewModel.changeColorToYellow()}" />
+
+            <ImageView
+                android:id="@+id/color_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/card_blue"
+                android:onClick="@{() -> viewModel.changeColorToBlue()}" />
+
+            <ImageView
+                android:id="@+id/color_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/card_red"
+                android:onClick="@{() -> viewModel.changeColorToRed()}" />
+
+            <ImageView
+                android:id="@+id/color_orange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/card_orange"
+                android:onClick="@{() -> viewModel.changeColorToOrange()}" />
+
+            <ImageView
+                android:id="@+id/color_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/card_green"
+                android:onClick="@{() -> viewModel.changeColorToGreen()}" />
+        </RadioGroup>
     </LinearLayout>
 </layout>

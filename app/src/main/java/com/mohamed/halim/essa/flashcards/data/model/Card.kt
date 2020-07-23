@@ -16,6 +16,7 @@ data class Card(
     var firstSide: String,
     var secondSide: String,
     val cardSetId: Long,
+    val color : Int,
     @PrimaryKey(autoGenerate = true)
     var cardId: Long? = null
 

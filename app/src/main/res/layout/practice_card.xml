@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="12dp"
+        app:customCardBackground="@{card.color}"
         android:elevation="16dp"
         app:cardCornerRadius="16dp">
 

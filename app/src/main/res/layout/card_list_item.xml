@@ -17,7 +17,8 @@
         android:layout_margin="4dp"
         android:elevation="16dp"
         android:padding="8dp"
-        app:cardCornerRadius="16dp">
+        app:cardCornerRadius="16dp"
+        app:customCardBackground="@{card.color}">
 
         <TextView
             android:id="@+id/card_text"

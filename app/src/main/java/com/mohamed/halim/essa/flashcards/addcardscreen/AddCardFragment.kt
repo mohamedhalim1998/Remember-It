@@ -23,6 +23,7 @@ class AddCardFragment : Fragment() {
     private lateinit var binding: AddCardFragmentBinding
     private var cardSetId = -1L
     private var cardId = -1L
+    private var color: Int = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -40,6 +41,7 @@ class AddCardFragment : Fragment() {
         if (cardId != -1L) {
             populateView()
         }
+        observeColor()
         return binding.root
     }
 
@@ -53,8 +55,18 @@ class AddCardFragment : Fragment() {
     private fun setupViewModel() {
         val database = CardsDatabase.getInstance(requireContext()).cardsDao
         val dataSource = DataSource.getInstance(database)
-        val factory = AddCardViewModelFactory(dataSource)
+        val factory = AddCardViewModelFactory(requireActivity().application, dataSource)
         viewModel = ViewModelProvider(this, factory).get(AddCardViewModel::class.java)
+        binding.viewModel = viewModel
+    }
+
+    private fun observeColor() {
+        viewModel.cardColor.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                color = it
+                binding.root.setBackgroundColor(it)
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -98,7 +110,8 @@ class AddCardFragment : Fragment() {
         val card = Card(
             binding.firstSide.text.toString(),
             binding.secondSide.text.toString(),
-            cardSetId
+            cardSetId,
+            color
         )
         viewModel.addCard(card)
     }
@@ -108,6 +121,7 @@ class AddCardFragment : Fragment() {
             binding.firstSide.text.toString().trim(),
             binding.secondSide.text.toString().trim(),
             cardSetId,
+            color,
             cardId
         )
         viewModel.updateCard(card)
