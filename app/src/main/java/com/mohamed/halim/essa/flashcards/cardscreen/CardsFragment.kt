@@ -6,18 +6,18 @@ import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mohamed.halim.essa.flashcards.R
-import com.mohamed.halim.essa.flashcards.data.CardsDatabase
-import com.mohamed.halim.essa.flashcards.data.DataSource
 import com.mohamed.halim.essa.flashcards.databinding.CardsFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CardsFragment : Fragment() {
     private lateinit var adapter: CardAdapter
-    private lateinit var viewModel: CardsViewModel
+    private val viewModel: CardsViewModel by viewModels()
     private lateinit var binding: CardsFragmentBinding
     private var cardSetId = -1L
     override fun onCreateView(
@@ -27,7 +27,8 @@ class CardsFragment : Fragment() {
         setHasOptionsMenu(true)
         binding = DataBindingUtil.inflate(inflater, R.layout.cards_fragment, container, false)
         binding.lifecycleOwner = this
-        setupViewModel()
+        cardSetId = getCardSetId()
+        binding.viewModel = viewModel
         setupRecycleView()
         setupObservers()
         return binding.root
@@ -64,15 +65,6 @@ class CardsFragment : Fragment() {
         viewModel.cardSet.observe(viewLifecycleOwner, Observer {
             requireActivity().title = it.name
         })
-    }
-
-    private fun setupViewModel() {
-        val database = CardsDatabase.getInstance(requireContext()).cardsDao
-        val dataSource = DataSource.getInstance(database)
-        cardSetId = getCardSetId()
-        val factory = CardsViewModelFactory(dataSource, cardSetId)
-        viewModel = ViewModelProvider(this, factory).get(CardsViewModel::class.java)
-        binding.viewModel = viewModel
     }
 
     private fun getCardSetId(): Long {
@@ -141,7 +133,7 @@ class CardsFragment : Fragment() {
             R.id.practice -> {
                 findNavController().navigate(
                     CardsFragmentDirections.actionCardsFragmentToPracticeFragment(
-                        getCardSetId()
+                        cardSetId
                     )
                 )
                 true

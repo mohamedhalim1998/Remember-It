@@ -2,14 +2,21 @@ package com.mohamed.halim.essa.flashcards.addcardscreen
 
 import android.app.Application
 import androidx.core.content.ContextCompat
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import com.mohamed.halim.essa.flashcards.R
 import com.mohamed.halim.essa.flashcards.data.DataSource
 import com.mohamed.halim.essa.flashcards.data.model.Card
 
-class AddCardViewModel(val app: Application, val dataSource: DataSource) : AndroidViewModel(app) {
+class AddCardViewModel
+@ViewModelInject constructor(
+    val app: Application, val dataSource: DataSource,
+    @Assisted private val savedStateHandle: SavedStateHandle
+) : AndroidViewModel(app) {
 
     private val _cardColor = MutableLiveData<Int>()
     val cardColor: LiveData<Int>

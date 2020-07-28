@@ -6,23 +6,23 @@ import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import com.mohamed.halim.essa.flashcards.R
-import com.mohamed.halim.essa.flashcards.data.CardsDatabase
-import com.mohamed.halim.essa.flashcards.data.DataSource
 import com.mohamed.halim.essa.flashcards.data.model.CardSet
 import com.mohamed.halim.essa.flashcards.databinding.SetFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SetFragment : Fragment(), CardSetOptionMenu {
 
     lateinit var binding: SetFragmentBinding
     lateinit var adapter: CardSetAdapter
-    lateinit var viewModel: SetViewModel
+    val viewModel: SetViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,7 +31,7 @@ class SetFragment : Fragment(), CardSetOptionMenu {
         setHasOptionsMenu(true)
         binding = DataBindingUtil.inflate(inflater, R.layout.set_fragment, container, false)
         binding.lifecycleOwner = this
-        setupViewModel()
+        binding.viewModel = viewModel
         setupRecycleView()
         setupObservers()
         return binding.root
@@ -81,13 +81,6 @@ class SetFragment : Fragment(), CardSetOptionMenu {
         }
     }
 
-    private fun setupViewModel() {
-        val database = CardsDatabase.getInstance(requireContext()).cardsDao
-        val dataSource = DataSource.getInstance(database)
-        val factory = SetViewModelFactory(dataSource)
-        viewModel = ViewModelProvider(this, factory).get(SetViewModel::class.java)
-        binding.viewModel = viewModel
-    }
 
     private fun setupRecycleView() {
         adapter = CardSetAdapter(

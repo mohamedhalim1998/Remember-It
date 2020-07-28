@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.mohamed.halim.essa.flashcards.R
-import com.mohamed.halim.essa.flashcards.data.CardsDatabase
-import com.mohamed.halim.essa.flashcards.data.DataSource
 import com.mohamed.halim.essa.flashcards.databinding.ViewCardFragmentBinding
 import com.mohamed.halim.essa.flashcards.util.flipCard
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ViewCardFragment : Fragment() {
 
-    private lateinit var viewModel: ViewCardViewModel
+    private val viewModel: ViewCardViewModel by viewModels()
     private lateinit var binding: ViewCardFragmentBinding
     private var cardId = -1L
     override fun onCreateView(
@@ -26,7 +26,6 @@ class ViewCardFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.view_card_fragment, container, false)
         cardId = requireArguments().getLong("cardId")
-        setupViewModel()
         setupObservers()
         return binding.root
     }
@@ -38,16 +37,6 @@ class ViewCardFragment : Fragment() {
                 (it as CardView).flipCard(card, binding.cardText)
             }
         })
-    }
-
-    private fun setupViewModel() {
-        val factory =
-            ViewCardViewModelFactory(
-                DataSource.getInstance(CardsDatabase.getInstance(requireContext()).cardsDao),
-                cardId
-            )
-
-        viewModel = ViewModelProvider(this, factory).get(ViewCardViewModel::class.java)
     }
 
 

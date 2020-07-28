@@ -9,23 +9,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class DataSource private constructor(private val database: CardsDao) {
+class DataSource constructor(private val database: CardsDao) {
     private val disposables = CompositeDisposable()
-
-    companion object {
-        @Volatile
-        private var INSTANCE: DataSource? = null
-
-        fun getInstance(database: CardsDao): DataSource {
-            var instance = INSTANCE
-            if (instance == null) {
-                instance = DataSource(database)
-                INSTANCE = instance
-            }
-            return instance
-        }
-    }
-
 
     fun getAllSets(): LiveData<List<CardSet>> {
         return LiveDataReactiveStreams.fromPublisher(
@@ -110,6 +95,4 @@ class DataSource private constructor(private val database: CardsDao) {
     fun clear() {
         disposables.clear()
     }
-
-
 }

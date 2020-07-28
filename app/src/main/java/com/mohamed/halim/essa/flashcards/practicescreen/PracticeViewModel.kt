@@ -1,13 +1,20 @@
 package com.mohamed.halim.essa.flashcards.practicescreen
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.mohamed.halim.essa.flashcards.data.DataSource
 import timber.log.Timber
 
-class PracticeViewModel(dataSource: DataSource, private val cardSetId: Long) :
+class PracticeViewModel @ViewModelInject constructor(
+    dataSource: DataSource,
+    @Assisted private val savedStateHandle: SavedStateHandle
+) :
     ViewModel() {
+    private val cardSetId: Long = savedStateHandle.get("cardSetId") ?: -1
     val cards = dataSource.getCardsFromSet(cardSetId)
     val scoreMap = HashMap<Int, Boolean>()
     private val _score = MutableLiveData<Int>()

@@ -7,19 +7,19 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.mohamed.halim.essa.flashcards.R
-import com.mohamed.halim.essa.flashcards.data.CardsDatabase
-import com.mohamed.halim.essa.flashcards.data.DataSource
 import com.mohamed.halim.essa.flashcards.data.model.Card
 import com.mohamed.halim.essa.flashcards.databinding.AddCardFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddCardFragment : Fragment() {
 
 
-    private lateinit var viewModel: AddCardViewModel
+    private val viewModel: AddCardViewModel by viewModels()
     private lateinit var binding: AddCardFragmentBinding
     private var cardSetId = -1L
     private var cardId = -1L
@@ -37,7 +37,7 @@ class AddCardFragment : Fragment() {
         binding.lifecycleOwner = this
         cardSetId = requireArguments().getLong("cardSetId")
         cardId = requireArguments().getLong("cardId")
-        setupViewModel()
+        binding.viewModel = viewModel
         if (cardId != -1L) {
             populateView()
         }
@@ -52,13 +52,6 @@ class AddCardFragment : Fragment() {
         })
     }
 
-    private fun setupViewModel() {
-        val database = CardsDatabase.getInstance(requireContext()).cardsDao
-        val dataSource = DataSource.getInstance(database)
-        val factory = AddCardViewModelFactory(requireActivity().application, dataSource)
-        viewModel = ViewModelProvider(this, factory).get(AddCardViewModel::class.java)
-        binding.viewModel = viewModel
-    }
 
     private fun observeColor() {
         viewModel.cardColor.observe(viewLifecycleOwner, Observer {

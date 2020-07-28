@@ -6,20 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.mohamed.halim.essa.flashcards.R
-import com.mohamed.halim.essa.flashcards.data.CardsDatabase
-import com.mohamed.halim.essa.flashcards.data.DataSource
 import com.mohamed.halim.essa.flashcards.databinding.PracticeFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class PracticeFragment : Fragment() {
 
 
     private lateinit var adapter: PracticeViewPagerAdapter
-    private lateinit var viewModel: PracticeViewModel
+    private val viewModel: PracticeViewModel by viewModels()
     private lateinit var binding: PracticeFragmentBinding
     private lateinit var cardViewPager: ViewPager2
     override fun onCreateView(
@@ -29,19 +29,10 @@ class PracticeFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.practice_fragment, container, false)
         binding.lifecycleOwner = this
         cardViewPager = binding.cardViewPager
-        setupViewModel()
         setupViewPager()
         setupObservers()
         binding.viewModel = viewModel
         return binding.root
-    }
-
-    private fun setupViewModel() {
-        val database = CardsDatabase.getInstance(requireContext()).cardsDao
-        val dataSource = DataSource.getInstance(database)
-        val id = getCardSetId()
-        val factory = PracticeViewModelFactory(dataSource, id)
-        viewModel = ViewModelProvider(this, factory).get(PracticeViewModel::class.java)
     }
 
     private fun getCardSetId(): Long {
