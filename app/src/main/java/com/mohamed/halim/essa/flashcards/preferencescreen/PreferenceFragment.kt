@@ -2,6 +2,7 @@ package com.mohamed.halim.essa.flashcards.preferencescreen
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
@@ -75,6 +76,14 @@ class PreferenceFragment : PreferenceFragmentCompat(),
                 enablePracticeReminder()
             } else {
                 disablePracticeReminder()
+            }
+        } else if (key == getString(R.string.pref_dark_mode_key)) {
+            val value = sharedPreferences?.getBoolean(key, false)
+            if (value!!) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
             }
         }
     }

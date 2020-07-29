@@ -15,14 +15,13 @@
         android:layout_height="match_parent"
         tools:context=".viewcardscreen.ViewCardFragment">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="16dp"
             android:elevation="16dp"
             app:cardCornerRadius="16dp"
-            app:customCardBackground="@{card.color}"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +37,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="English" />
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline5"

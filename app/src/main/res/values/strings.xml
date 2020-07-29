@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Flash Cards</string>
+    <string name="app_name">Remember It</string>
     <string name="done">Done</string>
     <string name="set_add_hint">Enter the set name</string>
     <string name="second_side">Second Side</string>
@@ -21,5 +21,7 @@
     <string name="notification_content">You get better by practicing every day, Keep up</string>
     <string name="pref_practice_reminder_key">practice_reminder_key</string>
     <string name="pref_practice_reminder_title">Practice Reminder</string>
+    <string name="pref_dark_mode_key">practice_dark_mode</string>
+    <string name="pref_dark_mode_title">Dark Mode</string>
     <string name="add_card">Add Card</string>
 </resources>

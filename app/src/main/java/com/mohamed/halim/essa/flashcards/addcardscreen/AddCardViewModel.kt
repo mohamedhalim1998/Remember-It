@@ -1,7 +1,6 @@
 package com.mohamed.halim.essa.flashcards.addcardscreen
 
 import android.app.Application
-import androidx.core.content.ContextCompat
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
@@ -11,6 +10,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.mohamed.halim.essa.flashcards.R
 import com.mohamed.halim.essa.flashcards.data.DataSource
 import com.mohamed.halim.essa.flashcards.data.model.Card
+import timber.log.Timber
 
 class AddCardViewModel
 @ViewModelInject constructor(
@@ -23,11 +23,12 @@ class AddCardViewModel
         get() = _cardColor
 
     init {
-        _cardColor.value = ContextCompat.getColor(app.applicationContext, R.color.card_white)
+        _cardColor.value = R.color.card_default
     }
 
     fun addCard(card: Card) {
         dataSource.addCard(card)
+        Timber.d("Color : ${card.color}")
     }
 
     fun updateCard(card: Card) {
@@ -39,26 +40,26 @@ class AddCardViewModel
     }
 
     fun changeColorToYellow() {
-        _cardColor.value = ContextCompat.getColor(app.applicationContext, R.color.card_yellow)
+        _cardColor.value = R.color.card_yellow
     }
 
     fun changeColorToBlue() {
-        _cardColor.value = ContextCompat.getColor(app.applicationContext, R.color.card_blue)
+        _cardColor.value = R.color.card_blue
     }
 
     fun changeColorToWhite() {
-        _cardColor.value = ContextCompat.getColor(app.applicationContext, R.color.card_white)
+        _cardColor.value = R.color.card_default
     }
 
     fun changeColorToOrange() {
-        _cardColor.value = ContextCompat.getColor(app.applicationContext, R.color.card_orange)
+        _cardColor.value = R.color.card_orange
     }
 
     fun changeColorToRed() {
-        _cardColor.value = ContextCompat.getColor(app.applicationContext, R.color.card_red)
+        _cardColor.value = R.color.card_red
     }
 
     fun changeColorToGreen() {
-        _cardColor.value = ContextCompat.getColor(app.applicationContext, R.color.card_green)
+        _cardColor.value = R.color.card_green
     }
 }

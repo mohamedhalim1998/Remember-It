@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,6 +15,7 @@ import com.mohamed.halim.essa.flashcards.R
 import com.mohamed.halim.essa.flashcards.data.model.Card
 import com.mohamed.halim.essa.flashcards.databinding.AddCardFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class AddCardFragment : Fragment() {
@@ -57,7 +59,8 @@ class AddCardFragment : Fragment() {
         viewModel.cardColor.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 color = it
-                binding.root.setBackgroundColor(it)
+                Timber.d("$it")
+                binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), it))
             }
         })
     }
@@ -107,6 +110,7 @@ class AddCardFragment : Fragment() {
             color
         )
         viewModel.addCard(card)
+
     }
 
     private fun editCard() {

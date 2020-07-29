@@ -45,6 +45,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/ic_option_menu"
+                android:tint="?android:attr/textColorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.PopupMenu
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -66,6 +67,12 @@ class CardViewHolder private constructor(val binding: CardListItemBinding) :
     ) {
         binding.executePendingBindings()
         binding.card = card
+        binding.cardView.setCardBackgroundColor(
+            ContextCompat.getColor(
+                binding.root.context,
+                card.color
+            )
+        )
         binding.cardView.setOnClickListener {
             (it as CardView).flipCard(card, binding.cardText, binding.optionMenu)
         }

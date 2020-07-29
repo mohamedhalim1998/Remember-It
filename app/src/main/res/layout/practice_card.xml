@@ -11,12 +11,11 @@
     </data>
 
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="12dp"
-        app:customCardBackground="@{card.color}"
         android:elevation="16dp"
         app:cardCornerRadius="16dp">
 
@@ -30,5 +29,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="English" />
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
+
 </layout>

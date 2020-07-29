@@ -11,7 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.getInputLayout
 import com.afollestad.materialdialogs.input.input
+import com.google.android.material.textfield.TextInputLayout
 import com.mohamed.halim.essa.flashcards.R
 import com.mohamed.halim.essa.flashcards.data.model.CardSet
 import com.mohamed.halim.essa.flashcards.databinding.SetFragmentBinding
@@ -60,16 +62,23 @@ class SetFragment : Fragment(), CardSetOptionMenu {
     private fun showAddSetDialog(cardSet: CardSet? = null) {
         if (cardSet == null) {
             MaterialDialog(requireContext()).show {
-                input(hintRes = R.string.set_add_hint) { materialDialog, charSequence ->
+                title(R.string.set_add_hint)
+
+                input { materialDialog, charSequence ->
+                    materialDialog.getInputLayout().boxBackgroundMode =
+                        TextInputLayout.BOX_BACKGROUND_NONE
+
                     viewModel.addCardSet(charSequence.toString().trim())
                     viewModel.hideAddSetDialog()
+
+
                 }
                 positiveButton(R.string.done)
             }
         } else {
             MaterialDialog(requireContext()).show {
+                title(R.string.set_add_hint)
                 input(
-                    hintRes = R.string.set_add_hint,
                     prefill = cardSet.name
                 ) { materialDialog, charSequence ->
                     cardSet.name = charSequence.toString()

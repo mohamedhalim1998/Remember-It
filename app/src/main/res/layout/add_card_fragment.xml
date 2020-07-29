@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -12,9 +13,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:background="#EEE"
         android:orientation="vertical"
         android:padding="16dp"
+        tools:background="#EEE"
         tools:context=".addcardscreen.AddCardFragment">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -27,14 +28,18 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:boxStrokeColor="@color/colorAccent"
+            app:helperTextTextColor="@color/colorAccent"
+            app:hintTextColor="@color/colorAccent">
 
             <EditText
                 android:id="@+id/first_side"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/first_side"
-                android:selectAllOnFocus="true" />
+                android:selectAllOnFocus="true"
+                android:textCursorDrawable="@null" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,7 +53,10 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:boxStrokeColor="@color/colorAccent"
+            app:helperTextTextColor="@color/colorAccent"
+            app:hintTextColor="@color/colorAccent">
 
             <EditText
                 android:id="@+id/second_side"
@@ -56,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/second_side"
-                android:imeOptions="actionDone" />
+                android:imeOptions="actionDone"
+                android:textCursorDrawable="@null" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,9 +82,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:background="@drawable/circle"
-                android:backgroundTint="@color/card_white"
-                android:onClick="@{() -> viewModel.changeColorToWhite()}"
-                tools:src="@drawable/ic_action_done_dark" />
+                android:backgroundTint="@color/card_default"
+                android:onClick="@{() -> viewModel.changeColorToWhite()}" />
 
             <ImageView
                 android:id="@+id/color_yellow"

@@ -26,6 +26,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/colorAccent"
             android:onClick="@{()->viewModel.navigateToAddCard()}"
             android:src="@drawable/ic_action_add" />
 
